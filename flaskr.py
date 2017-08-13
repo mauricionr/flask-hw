@@ -1,18 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-    Flaskr + Babel + PhraseApp
+    Flaskr + Babel + Tensorflow
     ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Modified Flask demo app showing localization with Flask-Babel and PhraseApp
-
 """
 
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
-from flask.ext.babel import Babel
+from flask_babel import Babel
 
 from tf import image
 
@@ -72,10 +69,12 @@ def add_entry():
     flash(('New entry was successfully posted'))
     return redirect(url_for('show_entries'))
 
-@app.route('/guess/<path>', methods=['GET'])
-def guess(path):
-    print('Hello world')
-    return jsonify(image.Image.initialize(path))
+@app.route('/guess/<imageUrl>', methods=['GET'])
+def guess(imageUrl):
+    guessedImage = image.Image(imageUrl)
+    return jsonify({
+        "imageUrl": imageUrl
+    })
 
 
 @app.route('/login', methods=['GET', 'POST'])
