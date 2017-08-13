@@ -13,7 +13,6 @@ from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask.ext.babel import Babel
-from flask_phrase import gettext, ngettext
 
 # Create our little application :)
 app = Flask(__name__)
@@ -26,7 +25,7 @@ babel = Babel(app)
 # Check the Accept-Language header and make a smart choice
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(app.config['LANGUAGES'].keys())
+    return request.accept_languages.best_match(app.config['LANGUAGES'].keys()
 
 
 def connect_db():
@@ -68,8 +67,8 @@ def add_entry():
     db.execute('insert into entries (title, text) values (?, ?)',
                [request.form['title'], request.form['text']])
     db.commit()
-    flash(gettext('New entry was successfully posted'))
-    return redirect(url_for('show_entries'))
+    flash('New entry was successfully posted')
+    return redirect(url_for('show_entries')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -77,20 +76,20 @@ def login():
     error = None
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
-            error = gettext('Invalid username')
+            error = ('Invalid username')
         elif request.form['password'] != app.config['PASSWORD']:
-            error = gettext('Invalid password')
+            error = ('Invalid password')
         else:
             session['logged_in'] = True
-            flash(gettext('You were logged in'))
-            return redirect(url_for('show_entries'))
+            flash('You were logged in')
+            return redirect(url_for('show_entries')
     return render_template('login.html', error=error)
 
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
-    flash(gettext('You were logged out'))
-    return redirect(url_for('show_entries'))
+    flash('You were logged out')
+    return redirect(url_for('show_entries')
 
 app.run()
