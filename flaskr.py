@@ -11,8 +11,10 @@
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+     render_template, flash, jsonify
 from flask.ext.babel import Babel
+
+from tf import image
 
 # Create our little application :)
 app = Flask(__name__)
@@ -69,6 +71,11 @@ def add_entry():
     db.commit()
     flash(('New entry was successfully posted'))
     return redirect(url_for('show_entries'))
+
+@app.route('/guess/<path>', methods=['GET'])
+def guess(path):
+    print('Hello world')
+    return jsonify(image.Image.initialize(path))
 
 
 @app.route('/login', methods=['GET', 'POST'])
