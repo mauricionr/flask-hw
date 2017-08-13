@@ -13,7 +13,7 @@ from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask.ext.babel import Babel
-from flask_phrase import Phrase, gettext, ngettext
+from flask_phrase import gettext, ngettext
 
 # Create our little application :)
 app = Flask(__name__)
@@ -22,9 +22,6 @@ app.config.from_pyfile('config.py')
 
 # Hook Babel to our app
 babel = Babel(app)
-
-# Hook Phrase to our app
-phrase = Phrase(app)
 
 # Check the Accept-Language header and make a smart choice
 @babel.localeselector

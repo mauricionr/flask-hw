@@ -1,28 +1,30 @@
 <!doctype html>
-<title>Flaskr</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<div class="page">
-  <h1>Flaskr</h1>
-  <div class="metanav">
-  {% if not session.logged_in %}
-    <a href="{{ url_for('login') }}">{{ gettext('log in') }}</a>
-  {% else %}
-    <a href="{{ url_for('logout') }}">{{ gettext('log out') }}</a>
-  {% endif %}
-  </div>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+<html>
 
-<script>
-  window.PHRASEAPP_CONFIG = {
-      projectId: "YOUR-PROJECT-ID"
-  };
-  (function() {
-      var phraseapp = document.createElement('script'); phraseapp.type = 'text/javascript'; phraseapp.async = true;
-      phraseapp.src = ['https://', 'phraseapp.com/assets/in-context-editor/2.0/app.js?', new Date().getTime()].join('');
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(phraseapp, s);
-  })();
-</script>
+<head>
+  <title>Flaskr</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+  <div class="page">
+    <h1>Flaskr</h1>
+    <div class="metanav">
+      {% if not session.logged_in %}
+      <a href="{{ url_for('login') }}">{{ gettext('log in') }}</a> {% else %}
+      <a href="{{ url_for('logout') }}">{{ gettext('log out') }}</a> {% endif %}
+    </div>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %} {% block body %}{% endblock %}
+  </div>
+
+  <script>
+    window.PHRASEAPP_CONFIG = {
+      projectId: "flask-demo-mnr"
+    };
+  </script>
+</body>
+
+</html>
