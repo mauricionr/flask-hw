@@ -46,6 +46,7 @@ def get_db():
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""
+    print(error)
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
@@ -71,7 +72,9 @@ def add_entry():
 
 @app.route('/guess/<imageUrl>', methods=['GET'])
 def guess(imageUrl):
-    guessedImage = image.Image(imageUrl)
+    """
+    """
+    image.main(imageUrl)
     return jsonify({
         "imageUrl": imageUrl
     })
@@ -79,6 +82,8 @@ def guess(imageUrl):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    """
     error = None
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
